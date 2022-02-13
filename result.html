@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+
+<canvas id="timeScale" width="1280px" height="20px">your browser does not support the canvas tag </canvas>
+<canvas id="myCanvas" width="1280px" height="1000px">your browser does not support the canvas tag </canvas>
+<div id="infoPanel"></div>
+<div id="legendPanel">
+	<canvas id="legendCanvas" width="100%" height="100%">your browser does not support the canvas tag </canvas>
+</div>
+
+<script type="text/javascript">
+// 数据
+var dataLst = JSON.parse('[{"date": "2022-02-12", "eventLst": [{"beginTime": "09:08", "endTime": "10:00", "eventType": "学习", "desc": "测试1"}, {"beginTime": "10:30", "endTime": "11:20", "eventType": "健身", "desc": "测试3"}, {"beginTime": "15:08", "endTime": "16:00", "eventType": "娱乐", "desc": "测试3"}, {"beginTime": "17:08", "endTime": "18:00", "eventType": "其它", "desc": "测试4"}]}, {"date": "2022-02-13", "eventLst": [{"beginTime": "11:08", "endTime": "13:29", "eventType": "其它", "desc": "开发timeRecorder程序"}, {"beginTime": "14:36", "endTime": "15:30", "eventType": "其它", "desc": "核酸检测"}, {"beginTime": "15:40", "endTime": "16:33", "eventType": "娱乐", "desc": "无"}, {"beginTime": "16:46", "endTime": "17:35", "eventType": "学习", "desc": "《宏观经济学》第33章笔记整理"}, {"beginTime": "17:36", "endTime": "18:26", "eventType": "健身", "desc": "跑步5km"}, {"beginTime": "21:15", "endTime": "22:10", "eventType": "其它", "desc": "照片后期-深圳湾大桥"}]}]');
+var eventTypeMap = JSON.parse('{"学习": "#99CC99", "健身": "#CC0033", "娱乐": "#FF99CC", "其它": "#999"}');
+</script>
+<script type="text/javascript" src="main.js"></script>
+
+</body>
+</html>

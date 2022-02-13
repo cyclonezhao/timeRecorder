@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+
+<canvas id="timeScale" width="1280px" height="20px">your browser does not support the canvas tag </canvas>
+<canvas id="myCanvas" width="1280px" height="1000px">your browser does not support the canvas tag </canvas>
+<div id="infoPanel"></div>
+<div id="legendPanel">
+	<canvas id="legendCanvas" width="100%" height="100%">your browser does not support the canvas tag </canvas>
+</div>
+
+<script type="text/javascript">
+// 数据
+var dataLst = JSON.parse('${json_data}');
+var eventTypeMap = JSON.parse('${json_eventType}');
+</script>
+<script type="text/javascript" src="main.js"></script>
+
+</body>
+</html>
