@@ -107,7 +107,7 @@ canvas.onmousemove = function(e){
 	for(var index in eventLst){
 		var event = eventLst[index];
 		if(event.beginTime <= timeStr && event.endTime >= timeStr){
-			var innerHTML = String.format("<p>{0}</p><p>{1} ~ {2}</p><p>{3}</p>", event.eventType, event.beginTime, event.endTime, event.desc);
+			var innerHTML = String.format("<p>{0}</p><p>{1} ~ {2}</p><p>描述：{3}</p>", event.eventType, event.beginTime, event.endTime, event.desc);
 			document.getElementById("infoPanel").innerHTML = innerHTML;
 			return;
 		}

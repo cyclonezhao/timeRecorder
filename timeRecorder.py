@@ -5,12 +5,12 @@ from collections import Counter
 import json
 
 # 读取 timeRecordData.txt 文件
-fileinput = open("timeRecordData.txt", "rt")
+fileinput = open("timeRecordData.txt", "rt", encoding='utf-8')
 rawDataLst = fileinput.read().split("\n")
 fileinput.close()
 
 # 读取 eventType.txt 文件，限定事件类别
-fileinput = open("eventType.txt", "rt")
+fileinput = open("eventType.txt", "rt", encoding='utf-8')
 rawEventTypeLst = fileinput.read().split("\n")
 fileinput.close()
 
