@@ -19,7 +19,7 @@ var width = 1280;
 var height = 1000;
 
 var label_date_x = 10;
-var timeline_x = label_date_x + 90;
+var timeline_x = label_date_x + 110;
 var timeline_y = 0;
 var timeline_width = 1080; // 6:00~24:00, 18*60min
 var timeline_height = 30;
