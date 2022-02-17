@@ -103,16 +103,34 @@ canvas.onmousemove = function(e){
 	var hour = Math.floor(min/60);
 	min = min - hour*60;
 	hour += 6;
-	var timeStr = prefixZero(hour, 2) + ":" + prefixZero(min, 2);
 	for(var index in eventLst){
 		var event = eventLst[index];
-		if(event.beginTime <= timeStr && event.endTime >= timeStr){
+		if(compareTime(hour, min, event.beginTime) >= 0 && compareTime(hour, min, event.endTime) <= 0){
 			var innerHTML = String.format("<p>{0}</p><p>{1} ~ {2}</p><p>描述：{3}</p>", event.eventType, event.beginTime, event.endTime, event.desc);
 			document.getElementById("infoPanel").innerHTML = innerHTML;
 			return;
 		}
 	}
 	document.getElementById("infoPanel").innerHTML = "";
+}
+
+function compareTime(hour, min, timeStr){
+	var arr = timeStr.split(":");
+	var toHour = parseInt(arr[0]);
+	var toMin = parseInt(arr[1]);
+	if(hour > toHour){
+		return 1;
+	}else if(hour < toHour){
+		return -1;
+	}else{
+		if(min > toMin){
+			return 1;
+		}else if(min < toMin){
+			return -1;
+		}else{
+			return 0;
+		}
+	}
 }
 
 function drawData(data){
