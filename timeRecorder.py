@@ -28,6 +28,8 @@ fileinput.close()
 # 生成第一个json
 _lst = []
 for rawData in rawDataLst:
+	if not rawData.strip():
+		continue
 	if rawData.startswith("#"):
 		continue;
 	rowData = rawData.split("\t")
@@ -38,6 +40,8 @@ _lst = []
 for key,value in _grp:
 	# endTime 必须以数字开头
 	value = list(filter(lambda v: v[2][0].isdigit(), value))
+	# beginTime 大于6点
+	value = list(filter(lambda v: int(v[1].split(":")[0]) >= 6, value))
 	eventLst = list(map(lambda v: {"beginTime":v[1],"endTime":v[2],"eventType":v[3],"desc":v[4]}, value))
 	_lst.append({"date": key, "eventLst": eventLst})
 # 按日期排序
