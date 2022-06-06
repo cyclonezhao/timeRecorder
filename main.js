@@ -14,6 +14,28 @@ function prefixZero(num, n) {
     return (Array(n).join(0) + num).slice(-n);
 }
 
+function color16(){//十六进制颜色随机
+    var r = Math.floor(Math.random()*256);
+    var g = Math.floor(Math.random()*256);
+    var b = Math.floor(Math.random()*256);
+    var color = '#'+(Array(6).join(0) + (r.toString(16)+g.toString(16)+b.toString(16))).slice(-6);
+    return color;
+}
+
+
+// 对eventType生成颜色
+var eventTypeMap = {};
+var eventTypeArr = eventTypeStr.split(",");
+var colors = [];
+for(var i = 0; i < eventTypeArr.length; i++){
+	var color = color16();
+	while(colors.indexOf(color) >= 0){
+		color = color16();
+	}
+	colors.push(color);
+	eventTypeMap[eventTypeArr[i]] = color;
+}
+
 
 var width = 1280;
 var height = 1000;
