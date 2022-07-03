@@ -6,8 +6,10 @@
 </head>
 <body>
 
-<canvas id="timeScale" width="1280px" height="20px">your browser does not support the canvas tag </canvas>
-<canvas id="myCanvas" width="1280px" height="1000px">your browser does not support the canvas tag </canvas>
+<canvas id="timeScale" width="1200px" height="20px">your browser does not support the canvas tag </canvas>
+<div id='picPanel'>
+	<canvas id="myCanvas" width="1200px" height="1100px">your browser does not support the canvas tag </canvas>
+</div>
 <div id="infoPanel"></div>
 <div id="legendPanel">
 	<canvas id="legendCanvas" width="200px" height="300px">your browser does not support the canvas tag </canvas>
@@ -16,7 +18,7 @@
 <script type="text/javascript">
 // 数据
 var dataLst = JSON.parse('${json_data}');
-var eventTypeStr = '${eventTypeStr}';
+var eventTypeDict = JSON.parse('${eventTypeStr}');
 </script>
 <script type="text/javascript" src="main.js"></script>
 

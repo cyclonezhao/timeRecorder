@@ -4,6 +4,7 @@ from builtins import map
 from collections import Counter
 import json
 import datetime
+import calendar
 
 # 读取 timeRecordData.txt 文件
 fileinput = open("timeRecordData.txt", "rt", encoding='utf-8')
@@ -24,7 +25,7 @@ fileinput.close()
 '''
 
 # 在  生成json: json_data 的过程中，收集事件类型
-eventTypeSet = set()
+eventTypeMap = {}
 
 # 生成json: json_data
 _lst = []
@@ -36,24 +37,26 @@ for rawData in rawDataLst:
 	rowData = rawData.split("\t")
 	_lst.append(rowData)
 	
-# 生成日期序列，用于识别出没录入事件的空日期
+# 生成本月的日期序列
 dateLst = []
-dt1 = datetime.datetime.strptime(_lst[0][0], '%Y年%m月%d日')
-dateLst.append(dt1.strftime("%Y-%m-%d"))
-now = datetime.datetime.now()
-# 两个日期对象差多少天
-diffDay = now - dt1
-diffDay = diffDay.days
-for i in range(diffDay):
-	dt2 = (dt1 + datetime.timedelta(days=i+1))
-	dateLst.append(dt2.strftime("%Y-%m-%d"))
-	
+dt = datetime.datetime.strptime(_lst[0][0], '%Y年%m月%d日')
+year = dt.year
+month = dt.month
+lastDay = calendar.monthrange(year, month)[1]
+for i in range(1, lastDay + 1):
+	dateLst.append('%d-%02d-%02d' % (year, month, i))
+
 # 按日期分组，转换eventLst
 _grp = {}
 for v in _lst:
 	_grp.setdefault(datetime.datetime.strptime(v[0], '%Y年%m月%d日').strftime("%Y-%m-%d"), []).append(v)
 
 _lst = []
+
+def convertToMinute(str):
+	arr = str.split(":")
+	return int(arr[0]) * 60 + int(arr[1])
+
 for date in dateLst:
 	eventLst = []
 	if date in _grp.keys():
@@ -63,9 +66,13 @@ for date in dateLst:
 		# beginTime 大于6点
 		value = list(filter(lambda v: int(v[1].split(":")[0]) >= 6, value))
 		eventLst = list(map(lambda v: {"beginTime":v[1],"endTime":v[2],"eventType":v[3],"desc":v[4]}, value))
-		
 		for event in value:
-			eventTypeSet.add(event[3])
+			totalMin = 0
+			if event[3] in eventTypeMap:
+				totalMin = eventTypeMap[event[3]]
+			diff = convertToMinute(event[2]) - convertToMinute(event[1])
+			totalMin = totalMin + diff
+			eventTypeMap[event[3]] = totalMin
 		
 	_lst.append({"date": date, "eventLst": eventLst})
 # 按日期排序
@@ -73,9 +80,8 @@ _lst = sorted(_lst, key=lambda v: v['date'])
 # 转json字符串
 json_data = json.dumps(_lst, ensure_ascii=False)
 
-
 # 生成事件类型
-eventTypeStr = ",".join(eventTypeSet)
+eventTypeStr = json.dumps(eventTypeMap, ensure_ascii=False)
 
 # 输出 result.html 文件
 resultFile = open("result.html", "w", encoding='utf-8')

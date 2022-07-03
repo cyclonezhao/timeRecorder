@@ -25,15 +25,14 @@ function color16(){//十六进制颜色随机
 
 // 对eventType生成颜色
 var eventTypeMap = {};
-var eventTypeArr = eventTypeStr.split(",");
 var colors = [];
-for(var i = 0; i < eventTypeArr.length; i++){
+for(var k in eventTypeDict){
 	var color = color16();
 	while(colors.indexOf(color) >= 0){
 		color = color16();
 	}
 	colors.push(color);
-	eventTypeMap[eventTypeArr[i]] = color;
+	eventTypeMap[k] = color;
 }
 
 
@@ -46,6 +45,9 @@ var timeline_y = 0;
 var timeline_width = 1080; // 6:00~24:00, 18*60min
 var timeline_height = 30;
 var timeline_gap = timeline_height + 5;
+
+
+
 
 var label_date_height = 15;
 var label_date_y = timeline_y + (timeline_height - label_date_height) / 2 + label_date_height;
@@ -74,15 +76,39 @@ var legend_rect_width = 13;
 var legend_gap = 10;
 var legend_y = 0;
 ctx.font= legend_rect_width + "px Arial";
+var legendArr = []
 for(var key in eventTypeMap){
-	ctx.fillStyle=eventTypeMap[key];
+	legendArr.push([eventTypeMap[key], key, eventTypeDict[key]]);
+}
+
+legendArr.sort(function(b,a){
+	if(a[2] > b[2]){
+		return 1;
+	}else if(a[2] == b[2]){
+		return 0;
+	}else{
+		return -1;
+	}
+});
+for(var i = 0; i < legendArr.length; i++){
+	var legendData = legendArr[i];
+	ctx.fillStyle=legendData[0];
 	ctx.fillRect(legend_x,legend_y,legend_rect_width,legend_rect_width);
-	ctx.fillText(key, legend_x + legend_rect_width + 10, legend_y+legend_rect_width-2);
+	ctx.fillText(legendData[1] + ": " + convertToHourStr(legendData[2]), legend_x + legend_rect_width + 10, legend_y+legend_rect_width-2);
 	legend_y += legend_rect_width + legend_gap;
+}
+
+function convertToHourStr(min){
+	var hour = parseInt(min/60);
+	var minute = min - hour * 60;
+	return hour + "h" + minute + "min";
 }
 
 // 时间轴（最主要的图）
 canvas=document.getElementById('myCanvas');
+height = dataLst.length * timeline_gap;
+canvas.setAttribute("height", height + "px");
+
 ctx=canvas.getContext('2d');
 
 for(var index in dataLst){

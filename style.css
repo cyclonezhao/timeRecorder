@@ -1,3 +1,14 @@
+#timeScale{
+	position: fixed;
+}
+
+#picPanel{
+	position: fixed;
+	top: 30px;
+	height:95vh;
+	overflow-y: scroll;
+}
+
 #infoPanel{
 	border: 1px solid #000;
     position: absolute;
