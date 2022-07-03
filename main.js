@@ -18,7 +18,21 @@ function color16(){//十六进制颜色随机
     var r = Math.floor(Math.random()*256);
     var g = Math.floor(Math.random()*256);
     var b = Math.floor(Math.random()*256);
-    var color = '#'+(Array(6).join(0) + (r.toString(16)+g.toString(16)+b.toString(16))).slice(-6);
+
+    r = r.toString(16);
+   	if(r.length == 1){
+   		r = "0"+r;
+   	}
+    g = g.toString(16);
+	if(g.length == 1){
+		g = "0"+g;
+	}
+    b = b.toString(16);
+	if(b.length == 1){
+		b = "0"+b;
+	}
+
+    var color = '#'+r+g+b;
     return color;
 }
 
